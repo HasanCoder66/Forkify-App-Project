@@ -11,20 +11,20 @@ const container2 = document.querySelector(".productDetail")
 // console.log(container2)
 
 
-function filteringData () {
+function filteringData() {
     const search = searchBar.value
     // console.log(search)
     searchHandler(search)
     searchBar.value = ""
-    
+
 }
 
 
-const sideBarHandler = ()=> {
-    let data  ;
+function sideBarHandler  (data)  {
+    let dataWork = data.data.recipe;
     let uiContainer = `<div class="card mb-3" style="background-color: beige; border: none;">
     <div class="img">
-        <img src="http://forkify-api.herokuapp.com/images/3309_MEDIUMc520.jpg"
+        <img src="${dataWork.image_url}"
             class="card-img-top image-fit" alt="Recipe Image">
     </div>
     <div class="card-body d-flex flex-column align-items-center">
@@ -61,43 +61,49 @@ const sideBarHandler = ()=> {
     </div>
 </div>`
 
+    container2.innerHTML = uiContainer;
+    return uiContainer
+    // console.log(uiContainer)
 }
 
-
- async function getData () {
-    const fetchData =await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes?search=Burgers`)
-    console.log(fetchData)
-    const dataInJson = fetchData.json()
-    console.log(dataInJson)
-    sideBarHandler
+async function getData(id) {
+    try {
+        const fetchData = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`)
+        console.log(fetchData)
+        const dataInJson = await fetchData.json()
+        console.log(dataInJson)
+        sideBarHandler(dataInJson)
+    } catch (err) {
+        console.log(err)
+    }
 
 }
-getData()
+// getData()
 
 
-function searchHandler (value) {
-    
+function searchHandler(value) {
+
     const hitApi = fetch(`https://forkify-api.herokuapp.com/api/v2/recipes?search=${value}`)
-    .then((res) => {
-        // console.log(res)
-        return res.json()
-    })
-    .then(function (jsonFormData) {
-        // console.log(jsonFormData)
-        uiCreate(jsonFormData)
-    })
+        .then((res) => {
+            console.log(res)
+            return res.json()
+        })
+        .then(function (jsonFormData) {
+            console.log(jsonFormData)
+            uiCreate(jsonFormData)
+        })
 }
 
 const uiCreate = (dataFromThen) => {
     const mapData = dataFromThen.data.recipes.map((item) => {
-        const itemBoxFromUi = ` <div class="row mx-auto ">
+        const itemBoxFromUi = ` <div class="row mx-auto " onclick="getData('${item.id}')">
     <div class="col-sm-4 mt-5 style="background-color: gold;">                                    
         <div class="box  d-flex bg-light">
             <p>
                 <img src="${item.image_url}" alt="image"
                     width="100px" class="rounded-circle">
                 <span class=" title ms-3" style="color: orange;"> ${item.title
-                } </span>
+            } </span>
                 <br>
                 <span class="ms-5"> ${item.publisher}</span>
 
@@ -106,10 +112,10 @@ const uiCreate = (dataFromThen) => {
 
     </div>
 </div>`
-// console.log(itemBoxFromUi)
-return itemBoxFromUi;
-})
-itemBox.innerHTML= mapData
+        // console.log(itemBoxFromUi)
+        return itemBoxFromUi;
+    })
+    itemBox.innerHTML = mapData
 }
 
 
@@ -121,7 +127,7 @@ itemBox.innerHTML= mapData
 
 
 
-    searchBtn.addEventListener('click',filteringData)
+searchBtn.addEventListener('click', filteringData)
 
 
 
