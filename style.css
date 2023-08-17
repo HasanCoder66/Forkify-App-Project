@@ -1,36 +1,36 @@
 body {
 background-color: rgb(248, 168, 19);
+height: 99%;
+    width: 99%;
 }
 .img img{
     border-radius: 50%;
+}
+#searchBtn{
+color:  black;
 }
 #searchBtn:hover{
 color:  white;
 }
 .nav-link:hover {
-color: orange;
+color: ;
+}
+.nav-link:hover {
+background-color: rgba(255, 217, 0, 0.151);
+border-radius: 10%;
 }
 .navbar-brand {
-    color: orange;
+    color: black;
+}
+.navbar {
+    background-color: white;
 }
 
 .main-Container{
     border-radius: 10px;
     margin-top: 35px;
-    margin: 0px, auto;
     background-color: #f9f5f3;
-    height: 90%;
-    width: 90%;
+
 }
 
-html {
-    box-sizing: border-box;
-    font-size: 92.5%;
-}
-.paragraph {
-    font-size: larger;
-    margin-top: 80px;
-    padding-left: 820px;
-}
-   
 
